@@ -1,10 +1,12 @@
 package it.iubar.pdfbox_hello;
 
+import java.io.IOException;
+
 public class pdfbox_hello {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.print("Hello World");
+	public static void main(String[] args) throws IOException{
+		PdfBoxApp client = new PdfBoxApp();
+		client.run();
 	}
 
 }
