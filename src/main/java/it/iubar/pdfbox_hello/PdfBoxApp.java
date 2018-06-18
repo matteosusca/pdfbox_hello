@@ -87,7 +87,7 @@ public class PdfBoxApp {
 	
 	public Map<String, String> getInformation() throws IOException
 	{
-Map<String, String> data = new LinkedHashMap<String, String>();
+		Map<String, String> data = new LinkedHashMap<String, String>();
 		
 		BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
 		
