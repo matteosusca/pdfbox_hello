@@ -25,6 +25,12 @@ public class PdfBoxApp {
 		Color iubarColor = new Color(243, 152, 0);
 		
 		PDDocument document = new PDDocument();
+		/*
+		AccessPermission ap = new AccessPermission();
+		StandardProtectionPolicy spp = new StandardProtectionPolicy("1234", "1234", ap);
+		spp.setPermissions(ap);
+		document.protect(spp);
+		*/
 		PDPage my_page = new PDPage();
 		document.addPage(my_page);
 		
@@ -32,17 +38,25 @@ public class PdfBoxApp {
 	    PDPageContentStream contentStream = new PDPageContentStream(document, page);
 	    
 	    PDImageXObject logo = PDImageXObject.createFromFile("C:\\Users\\iubar\\Desktop\\iubar_logo.png",document);  
-	    contentStream.drawImage(logo, 200, 700);
+	    contentStream.drawImage(logo, 200, 700);	    
+	    
+	    contentStream.setNonStrokingColor(Color.LIGHT_GRAY);
+	    contentStream.addRect(130, 665, 300, 1);
+	    contentStream.fill();
 	    
 	    contentStream.beginText(); 
-	    contentStream.newLineAtOffset(210, 650);
+	    contentStream.newLineAtOffset(210, 640);
 	    contentStream.setNonStrokingColor(Color.black);
  	    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 17);
  	    contentStream.showText("Scheda Personale");
 	    contentStream.endText();
 	    
+	    contentStream.setNonStrokingColor(Color.LIGHT_GRAY);
+	    contentStream.addRect(130, 625, 300, 1);
+	    contentStream.fill();
+	    
 	    contentStream.beginText(); 
-	    contentStream.newLineAtOffset(40, 600);
+	    contentStream.newLineAtOffset(40, 585);
 	    contentStream.setLeading(19.0f);
 	    
 	    for (String name: information.keySet()){
@@ -73,22 +87,18 @@ public class PdfBoxApp {
 	
 	public Map<String, String> getInformation() throws IOException
 	{
-		Map<String, String> data = new LinkedHashMap<String, String>();
+Map<String, String> data = new LinkedHashMap<String, String>();
 		
 		BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
 		
 		System.out.println("!ATTENZIONE! Scrivere tutto sempre minuscolo.");
 		
 		System.out.print("Nome: ");
-		String name =  console.readLine();
-		name = name.substring(0,1).toUpperCase() + name.substring(1,name.length()).toLowerCase();
-		data.put("Nome", name);
+		data.put("Nome", console.readLine());
 		
 		System.out.print("Cognome: ");
-		String surname =  console.readLine();
-		surname = surname.substring(0,1).toUpperCase() + surname.substring(1,surname.length()).toLowerCase();
-		data.put("Cognome",surname);
-		
+		data.put("Cognome", console.readLine());
+		 
 		System.out.print("Sesso: ");
 		data.put("Sesso", console.readLine().toUpperCase());
 		
@@ -97,16 +107,13 @@ public class PdfBoxApp {
 		
 		System.out.print("Comune di nascita: ");
 		String comune = console.readLine();
-		comune = comune.substring(0,1).toUpperCase() + comune.substring(1,comune.length()).toLowerCase();
-		System.out.print("In provincia: ");
-		
+		System.out.print("Provincia: ");
 		String provincia = console.readLine().toUpperCase();
 		data.put("Nato a", comune + " (" + provincia + ")");
 		
 		System.out.print("Comune di residenza: ");
 		comune = console.readLine();
-		comune = comune.substring(0,1).toUpperCase() + comune.substring(1,comune.length()).toLowerCase();
-		System.out.print("In provincia: ");
+		System.out.print("Provincia: ");
 		provincia = console.readLine().toUpperCase();
 		data.put("Residente a", comune + " (" + provincia + ")");
 		
