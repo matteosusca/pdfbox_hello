@@ -7,8 +7,8 @@
   <version>1.0-SNAPSHOT</version>
   <build>
 <!--       <fileName>${project.artifactId}-${project.version}</fileName> -->
-      <plugins>
-         <plugin>
+     <plugins>
+        <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.7.0</version>
             <configuration>
