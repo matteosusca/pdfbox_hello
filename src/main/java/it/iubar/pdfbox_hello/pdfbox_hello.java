@@ -15,9 +15,11 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
@@ -55,7 +57,7 @@ public final class pdfbox_hello {
 		// ....
 		File doc1 = new File(SAMPLE_PDF);
 		File doc2 = new File(SAMPLE_PDF);
-		File merged = pdfMerge(doc1, doc2, MERGED_PDF);
+		File merged = pdfMerge(doc1, formSample, MERGED_PDF);
 	}   
 
 
@@ -172,6 +174,8 @@ public final class pdfbox_hello {
 		
 		try (PDDocument pdfDocument = PDDocument.load(file)) {
 			PDAcroForm acroForm = pdfDocument.getDocumentCatalog().getAcroForm();
+			COSDictionary obj = acroForm.getCOSObject();
+			System.out.println(obj.toString());
 			if (acroForm != null) {
 				List<PDField> fields = acroForm.getFields();
 				Iterator<PDField> fieldsIter = fields.iterator();
@@ -190,15 +194,26 @@ public final class pdfbox_hello {
 		
 	      PDDocument doc1 = PDDocument.load(file1);
 	      PDDocument doc2 = PDDocument.load(file2);
+	     /* PDAcroForm acroForm1 = doc1.getDocumentCatalog().getAcroForm();
+	      COSDictionary obj1 = acroForm1.getCOSObject();
+	      System.out.println(obj1.toString());
 	      
-	      PDFMergerUtility PDFmerger = new PDFMergerUtility();
+	      PDAcroForm acroForm2 = doc2.getDocumentCatalog().getAcroForm();
+	      COSDictionary obj2 = acroForm2.getCOSObject();
+	      System.out.println(obj2.toString());*/
+	      
+	      
+	      PDFMergerUtility pdfMerger = new PDFMergerUtility();
 
-	      PDFmerger.setDestinationFileName(filename);
+	      pdfMerger.setDestinationFileName(filename);
+	      PDDocumentInformation info = new PDDocumentInformation();
+	      info.setTitle("PDF di esempio");
+	      pdfMerger.setDestinationDocumentInformation(info );
 	      File file = new File(filename);
 	      
-	      PDFmerger.addSource(file1);
-	      PDFmerger.addSource(file2);
-	      PDFmerger.mergeDocuments();
+	      pdfMerger.addSource(file1);
+	      pdfMerger.addSource(file2);
+	      pdfMerger.mergeDocuments();
 	      
 	      doc1.close();
 	      doc2.close();
