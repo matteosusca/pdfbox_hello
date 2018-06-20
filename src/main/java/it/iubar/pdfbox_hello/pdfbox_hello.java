@@ -178,7 +178,7 @@ public final class pdfbox_hello {
 	
 	public static File pdfMerge(File file1, File file2, String filename) throws IOException {
 
-		  //MemoryUsageSetting.setupMainMemoryOnly();
+		  MemoryUsageSetting.setupMainMemoryOnly();
 	      PDDocument doc1 = PDDocument.load(file1);
 	      PDDocument doc2 = PDDocument.load(file2);
 	      
@@ -189,7 +189,7 @@ public final class pdfbox_hello {
 	      
 	      PDFmerger.addSource(file1);
 	      PDFmerger.addSource(file2);
-	      PDFmerger.mergeDocuments();//MemoryUsageSetting.setupMainMemoryOnly());
+	      PDFmerger.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
 	      
 	      doc1.close();
 	      doc2.close();
