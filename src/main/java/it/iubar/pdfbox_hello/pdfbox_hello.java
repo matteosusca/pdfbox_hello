@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
@@ -13,6 +16,7 @@ import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
@@ -36,19 +40,23 @@ public final class pdfbox_hello {
 	private pdfbox_hello() {
 	}
 
-	private static final String FILENAME = "SimpleForm.pdf";
+	private static final String FORM_PDF = "SimpleForm.pdf";
 	private static final String FILLED_PDF = "FillFormField.pdf";
+	private static final String MERGED_PDF = "Merged.pdf";
+	private static final String SAMPLE_PDF = "sample.pdf";
 
 	public static void main(String[] args) throws IOException {
-		//...
-		File file = createForm(FILENAME);
+		//
+		File formSample = createForm(FORM_PDF);
 		// ..
-		List<String> names = getFieldsNames(file);
+		Map<String, String> names = getFieldsNames(formSample);
 		// ...
-		File outPdf = fillForm(file, FILLED_PDF);
+		File formFilled = fillForm(formSample, FILLED_PDF);
 		// ....
-		File outPdf3 = pdfMerge(file, outPdf, "Merged.pdf");
-	}
+		File doc1 = new File(SAMPLE_PDF);
+		File doc2 = new File(SAMPLE_PDF);
+		File merged = pdfMerge(doc1, doc2, MERGED_PDF);
+	}   
 
 
 	
@@ -56,8 +64,8 @@ public final class pdfbox_hello {
 	public static File createForm(String filename2) throws IOException {
 		File file = null;
 		// Color iubarColor = new Color(243, 152, 0);
-		PDColor iubarColor = new PDColor(new float[] { 243f, 152f, 0f }, PDDeviceRGB.INSTANCE);
-		PDColor lightGray = new PDColor(new float[] { 224f, 224f, 224f }, PDDeviceRGB.INSTANCE);
+		PDColor iubarColor = new PDColor(new float[] { 0.94f, 0.59f, 0.0f }, PDDeviceRGB.INSTANCE);
+		PDColor lightOrange = new PDColor(new float[] { 0.99f, 0.851f, 0.597f }, PDDeviceRGB.INSTANCE);
 
 		// Create a new document with an empty page.
 		try (PDDocument document = new PDDocument()) {
@@ -98,12 +106,12 @@ public final class pdfbox_hello {
 			PDAppearanceCharacteristicsDictionary nameFieldAppearance = new PDAppearanceCharacteristicsDictionary(
 					new COSDictionary());
 			nameFieldAppearance.setBorderColour(iubarColor);
-			nameFieldAppearance.setBackground(lightGray);
+			nameFieldAppearance.setBackground(lightOrange);
 			nameWidget.setAppearanceCharacteristics(nameFieldAppearance);
 
 			nameWidget.setPrinted(true);
 			page.getAnnotations().add(nameWidget);
-			nameBox.setValue("Nome");
+			nameBox.setValue("Inserisci il nome");
 
 			PDTextField surnameBox = new PDTextField(acroForm);
 			surnameBox.setPartialName("Cognome");
@@ -113,19 +121,20 @@ public final class pdfbox_hello {
 			acroForm.getFields().add(surnameBox);
 
 			PDAnnotationWidget surnameWidget = surnameBox.getWidgets().get(0);
-			PDRectangle surnameRect = new PDRectangle(50, 650, 150, 30);
+			PDRectangle surnameRect = new PDRectangle(220, 700, 150, 30);
 			surnameWidget.setRectangle(surnameRect);
 			surnameWidget.setPage(page);
 
 			PDAppearanceCharacteristicsDictionary surnameFieldAppearance = new PDAppearanceCharacteristicsDictionary(
 					new COSDictionary());
 			surnameFieldAppearance.setBorderColour(iubarColor);
-			surnameFieldAppearance.setBackground(lightGray);
+			surnameFieldAppearance.setBackground(lightOrange);
 			surnameWidget.setAppearanceCharacteristics(surnameFieldAppearance);
 
 			surnameWidget.setPrinted(true);
 			page.getAnnotations().add(surnameWidget);
-			surnameBox.setValue("Cognome");
+			surnameBox.setValue("Inserisci il cognome");
+			
 
 			document.save(filename2);
 			file = new File(filename2);
@@ -157,9 +166,9 @@ public final class pdfbox_hello {
 		
 	}
 	
-	public static List<String> getFieldsNames(File file) throws IOException{
+	public static Map<String, String> getFieldsNames(File file) throws IOException{
 		
-		List<String> names = new ArrayList<String>();
+		Map<String, String> boxs = new LinkedHashMap<String, String>();
 		
 		try (PDDocument pdfDocument = PDDocument.load(file)) {
 			PDAcroForm acroForm = pdfDocument.getDocumentCatalog().getAcroForm();
@@ -169,16 +178,16 @@ public final class pdfbox_hello {
 				while( fieldsIter.hasNext())
 				{
 					PDField field = (PDField)fieldsIter.next();
-				    names.add(field.getFullyQualifiedName());
+					boxs.put(field.getPartialName(), field.getValueAsString());
 				}
 			}
 		}
-		return names;
+		return boxs;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static File pdfMerge(File file1, File file2, String filename) throws IOException {
-
-		  MemoryUsageSetting.setupMainMemoryOnly();
+		
 	      PDDocument doc1 = PDDocument.load(file1);
 	      PDDocument doc2 = PDDocument.load(file2);
 	      
@@ -189,7 +198,7 @@ public final class pdfbox_hello {
 	      
 	      PDFmerger.addSource(file1);
 	      PDFmerger.addSource(file2);
-	      PDFmerger.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
+	      PDFmerger.mergeDocuments();
 	      
 	      doc1.close();
 	      doc2.close();
