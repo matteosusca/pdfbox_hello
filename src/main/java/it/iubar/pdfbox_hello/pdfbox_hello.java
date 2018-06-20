@@ -210,7 +210,6 @@ public final class pdfbox_hello {
 	      info.setTitle("PDF di esempio");
 	      pdfMerger.setDestinationDocumentInformation(info );
 	      File file = new File(filename);
-	      
 	      pdfMerger.addSource(file1);
 	      pdfMerger.addSource(file2);
 	      pdfMerger.mergeDocuments();

@@ -90,24 +90,28 @@ endobj
 12 0 obj
 <<
 /Helv 15 0 R
+/ZaDb 16 0 R
 >>
 endobj
 13 0 obj
 <<
+/Length 205
 /Type /XObject
 /Subtype /Form
 /BBox [0.0 0.0 150.0 30.0]
-/Length 172
-/Resources <<
-/Font 16 0 R
->>
 /Matrix [1.0 0.0 0.0 1.0 0.0 0.0]
 /FormType 1
+/Resources <<
+/Font 17 0 R
+>>
 >>
 stream
 /DeviceRGB cs
-0.94 0.59 0 sc
-1 w
+0.99 0.851 0.597 sc
+0 0 150 30 re
+f
+/DeviceRGB CS
+0.94 0.59 0 SC
 0.5 0.5 149 29 re
 s
 /Tx BMC
@@ -121,7 +125,7 @@ BT
 /DeviceRGB cs
 0 0 0 sc
 2 10.692 Td
-<546573746FA0626C61A0626C61> Tj
+(Testo bla bla) Tj
 ET
 Q
 EMC
@@ -131,20 +135,23 @@ endstream
 endobj
 14 0 obj
 <<
+/Length 205
 /Type /XObject
 /Subtype /Form
 /BBox [0.0 0.0 150.0 30.0]
-/Length 172
-/Resources <<
-/Font 17 0 R
->>
 /Matrix [1.0 0.0 0.0 1.0 0.0 0.0]
 /FormType 1
+/Resources <<
+/Font 18 0 R
+>>
 >>
 stream
 /DeviceRGB cs
-0.94 0.59 0 sc
-1 w
+0.99 0.851 0.597 sc
+0 0 150 30 re
+f
+/DeviceRGB CS
+0.94 0.59 0 SC
 0.5 0.5 149 29 re
 s
 /Tx BMC
@@ -158,7 +165,7 @@ BT
 /DeviceRGB cs
 0 0 0 sc
 2 10.692 Td
-<546573746FA0626C61A0626C61> Tj
+(Testo bla bla) Tj
 ET
 Q
 EMC
@@ -176,18 +183,33 @@ endobj
 endobj
 16 0 obj
 <<
-/Helv 15 0 R
-/F2 15 0 R
+/Type /Font
+/Subtype /Type1
+/BaseFont /ZapfDingbats
 >>
 endobj
 17 0 obj
 <<
-/Helv 15 0 R
+/Helv 19 0 R
 /F2 15 0 R
 >>
 endobj
+18 0 obj
+<<
+/Helv 19 0 R
+/F2 15 0 R
+>>
+endobj
+19 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+>>
+endobj
 xref
-0 18
+0 20
 0000000000 65535 f
 0000000015 00000 n
 0000000094 00000 n
@@ -201,17 +223,19 @@ xref
 0000000828 00000 n
 0000000893 00000 n
 0000000925 00000 n
-0000000960 00000 n
-0000001319 00000 n
-0000001678 00000 n
-0000001776 00000 n
-0000001822 00000 n
+0000000973 00000 n
+0000001365 00000 n
+0000001757 00000 n
+0000001855 00000 n
+0000001929 00000 n
+0000001975 00000 n
+0000002021 00000 n
 trailer
 <<
 /Root 1 0 R
-/ID [<FE32E27CF8B141AE4DA6701B8BD86582> <FE32E27CF8B141AE4DA6701B8BD86582>]
-/Size 18
+/ID [<A6E12F1253CCCF7FC0035CD57EE49AE0> <A6E12F1253CCCF7FC0035CD57EE49AE0>]
+/Size 20
 >>
 startxref
-1868
+2119
 %%EOF
